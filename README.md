@@ -4,6 +4,18 @@ The **Anakyklos Control Center** is the canonical administrative surface for the
 
 Its repository and technical component name is `control-center`. In the desktop environment and other user-facing surfaces, the application should normally be presented simply as **Anakyklos**.
 
+## Identity
+
+- **User-facing name:** `Anakyklos`
+- **Codename:** none
+- **Animal identity:** none
+- **Desktop launcher:** yes
+- **Primary icon:** the Anakyklos ecosystem mark
+
+The Control Center deliberately does **not** belong to the fauna. It represents the ecosystem as a whole and is the surface through which the user sees and administers individual fauna members, applications, services, and extensions.
+
+See [`docs/IDENTITY.md`](docs/IDENTITY.md) for the identity decision and rationale.
+
 ## Purpose
 
 Anakyklos is growing as a collection of applications, services, runtimes, bridges, workers, and integrations. Not every component should have its own settings UI or desktop launcher.
@@ -91,6 +103,8 @@ See [`docs/COMPONENT_MANIFEST.md`](docs/COMPONENT_MANIFEST.md).
 
 A component may have an icon and visual identity without having a desktop launcher. Services should surface inside Anakyklos rather than polluting the desktop application menu.
 
+For example, the Substrate belongs to the fauna under the codename **Talpa**, while remaining a headless service managed from Anakyklos.
+
 ### 5. Low idle cost is a requirement
 
 The Control Center should not require expensive polling when closed. It should favor event-driven state, lazy loading, and on-demand diagnostics.
@@ -110,7 +124,7 @@ User
              |
        +-----+------+
        |            |
-   Ouroboros     Substrate
+   Ouroboros     Substrate / Talpa
                     |
              Linux interfaces
                     |
