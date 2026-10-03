@@ -87,11 +87,38 @@ The UI must remain useful without becoming a permanently running telemetry dashb
 
 Ouroboros remains responsible for mission orchestration and higher-level execution. The Control Center exposes administration and observability; it must not absorb Ouroboros responsibilities.
 
-### 2. The Control Center is not the system daemon
+### 2. Control Center is not Mission Control
+
+The Control Center administers the ecosystem; it does not operate the authoritative Mission graph.
+
+Ouroboros Mission Control is a separate operational surface over Ouroboros Mission state. Its future Mission Canvas may visualize missions, dependencies, capability invocations, approvals, blockers and evidence. None of that state is owned by the Control Center.
+
+The Control Center may:
+
+- show whether Ouroboros, Runstead and Mission Control are installed/available;
+- expose health, version, resource policy, permissions and configuration declared through public contracts;
+- expose explicit administrative actions such as start/stop/restart where the owning component contract allows them;
+- deep-link/open Mission Control or Runstead when appropriate.
+
+The Control Center must not:
+
+- persist a second Mission/task graph;
+- dispatch coding tasks directly to Runstead as an alternate orchestrator;
+- call Codex CLI, Claude Code, OpenCode, Antigravity or other coding CLIs on behalf of Missions;
+- infer Mission completion from component health;
+- read Ouroboros or Runstead private databases/internals;
+- duplicate Ouroboros policy, approvals, scheduler or mission recovery;
+- turn a visual integration map into execution authority.
+
+If Ouroboros or Mission Control is unavailable, the Control Center reports that state honestly. It does not emulate the missing owner.
+
+The normative cross-project boundary is recorded in Anakyklos/architecture ADR 0004.
+
+### 3. The Control Center is not the system daemon
 
 Low-level Linux integration belongs to [`Anakyklos/substrate`](https://github.com/Anakyklos/substrate). The Control Center consumes stable interfaces exposed by system services instead of directly reimplementing `udev`, cgroups, netlink, filesystem watching, or privileged operations.
 
-### 3. Components describe themselves
+### 4. Components describe themselves
 
 The Control Center should not contain a hard-coded settings page for every Anakyklos project.
 
@@ -99,13 +126,13 @@ Each component should publish a machine-readable manifest describing its identit
 
 See [`docs/COMPONENT_MANIFEST.md`](docs/COMPONENT_MANIFEST.md).
 
-### 4. Headless components stay headless
+### 5. Headless components stay headless
 
 A component may have an icon and visual identity without having a desktop launcher. Services should surface inside Anakyklos rather than polluting the desktop application menu.
 
 For example, the Substrate belongs to the fauna under the codename **Talpa**, while remaining a headless service managed from Anakyklos.
 
-### 5. Low idle cost is a requirement
+### 6. Low idle cost is a requirement
 
 The Control Center should not require expensive polling when closed. It should favor event-driven state, lazy loading, and on-demand diagnostics.
 
